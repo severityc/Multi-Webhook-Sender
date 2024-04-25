@@ -1,6 +1,8 @@
 import requests
+import time
+from itertools import cycle
 
-def send_message(webhook_url, message, avatar_url=None, username=None):
+def send_message(webhook_url, message, avatar_url=None, username=None, proxy=None):
     payload = {'content': message}
     if avatar_url:
         payload['avatar_url'] = avatar_url
@@ -8,7 +10,7 @@ def send_message(webhook_url, message, avatar_url=None, username=None):
         payload['username'] = username
 
     try:
-        response = requests.post(webhook_url, json=payload)
+        response = requests.post(webhook_url, json=payload, proxies=proxy)
         if response.status_code == 204:
             print("Message sent successfully to", webhook_url)
         else:
@@ -24,23 +26,33 @@ def main():
         print("webhooks.txt not found.")
         return
 
+    try:
+        with open('proxies.txt', 'r') as file:
+            proxies_list = file.read().splitlines()
+    except FileNotFoundError:
+        print("proxies.txt not found.")
+        return
+
     send_from_file = input("Do you want to send the text from message.txt? (y/n): ").strip().lower()
     if send_from_file == 'y':
         try:
             with open('message.txt', 'r') as file:
                 message = file.read()
         except FileNotFoundError:
-            print("message.txt not found.")
+            print("msg.txt not found.")
             return
     else:
         message = input("Enter the message you want to send: ")
 
-    custom_avatar_url = "paste in the image link here"
+    custom_avatar_url = "https://cdn.discordapp.com/icons/1223742106187862176/367872a89fc727cfe0cbf885c84644c8.webp?size=96"
+    custom_username = "ObscuraLua"
 
-    custom_username = "put the name u want here"
+    proxies_cycle = cycle(proxies_list)
 
     for webhook_url in webhook_urls:
-        send_message(webhook_url, message, custom_avatar_url, custom_username)
+        proxy = {'http': next(proxies_cycle)}
+        send_message(webhook_url, message, custom_avatar_url, custom_username, proxy)
+        time.sleep(0.5)
 
 if __name__ == "__main__":
     main()
