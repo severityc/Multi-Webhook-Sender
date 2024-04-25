@@ -30,7 +30,7 @@ def main():
             with open('message.txt', 'r') as file:
                 message = file.read()
         except FileNotFoundError:
-            print("msg.txt not found.")
+            print("message.txt not found.")
             return
     else:
         message = input("Enter the message you want to send: ")
