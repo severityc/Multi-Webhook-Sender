@@ -9,3 +9,4 @@ Send messages with/ as many webhooks as u want all in one instance!
 1. save ur webhooks to `webhooks.txt`
 2. (optional) put ur well formatted prewritten message in `message.txt`
 3. use this version of python if ur new : https://www.python.org/downloads/release/python-3116/
+4. u can also use proxies in `proxies.txt` (format is ip:port)
