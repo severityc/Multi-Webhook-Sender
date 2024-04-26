@@ -44,8 +44,8 @@ def main():
     else:
         message = input("Enter the message you want to send: ")
 
-    custom_avatar_url = "https://cdn.discordapp.com/icons/1223742106187862176/367872a89fc727cfe0cbf885c84644c8.webp?size=96"
-    custom_username = "ObscuraLua"
+    custom_avatar_url = "image url"
+    custom_username = "name"
 
     proxies_cycle = cycle(proxies_list)
 
